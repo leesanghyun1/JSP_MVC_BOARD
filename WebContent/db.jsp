@@ -30,7 +30,6 @@
 			connection = DriverManager.getConnection(url, uid, upw);
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(query);
-			System.out.println("1");
 			while(resultSet.next()){
 				
 				String id = resultSet.getString("u_id");
