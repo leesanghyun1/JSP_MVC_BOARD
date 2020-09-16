@@ -9,6 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.java.command.BCommand;
+import com.java.command.BContentCommand;
+import com.java.command.BDeleteCommand;
+import com.java.command.BListCommand;
+import com.java.command.BModifyCommand;
+import com.java.command.BReplyCommand;
+import com.java.command.BReplyViewCommand;
+import com.java.command.BWriteCommand;
+
 /**
  * Servlet implementation class BFrontController
  */
@@ -41,6 +50,7 @@ public class BFrontController extends HttpServlet {
 		System.out.println("doPost");
 		actionDo(request,response);
 	}
+	
 	protected void actionDo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("actionDo");
@@ -55,19 +65,38 @@ public class BFrontController extends HttpServlet {
 		String com = uri.substring(conPath.length());
 		
 		if(com.equals("/write_view.do")) {
-			viewPage = "wirte_view.jsp";
-		}else if("/write.do") {
+			viewPage = "write_view.jsp";
+		} else if(com.equals("/write.do")) {
 			command = new BWriteCommand();
-			command.excute(request,response);
+			command.execute(request, response);
 			viewPage = "list.do";
-		}else if("/list.do") {
-			
-		}else if("/content_view.do") {
-			
-		}else if("/modify.do") {
-			
+		} else if(com.equals("/list.do")) {
+			command = new BListCommand();
+			command.execute(request, response);
+			viewPage = "list.jsp";
+		} else if(com.equals("/content_view.do")){
+			command = new BContentCommand();
+			command.execute(request, response);
+			viewPage = "content_view.jsp";
+		} else if(com.equals("/modify.do")) {
+			command = new BModifyCommand();
+			command.execute(request, response);
+			viewPage = "list.do";
+		} else if(com.equals("/delete.do")) {
+			command = new BDeleteCommand();
+			command.execute(request, response);
+			viewPage = "list.do";
+		} else if(com.equals("/reply_view.do")) {
+			command = new BReplyViewCommand();
+			command.execute(request, response);
+			viewPage = "reply_view.jsp";
+		} else if(com.equals("/reply.do")) {
+			command = new BReplyCommand();
+			command.execute(request, response);
+			viewPage = "list.do";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
+		dispatcher.forward(request, response);
 	}
 }
