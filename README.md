@@ -1,2 +1,2 @@
 # SpringProject
-Spring Project ing...
+Spring Project 진행중
